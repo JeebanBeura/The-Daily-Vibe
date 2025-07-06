@@ -1,57 +1,68 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 
 const newsArticleSchema = new mongoose.Schema({
-    title:{
+    title: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
-    content:{
-        type:String,
-        required: true
-    },
-    summary:{
+    content: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
-    category:{
+    summary: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
         required: true
     },
-    tag:{
+    tag: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Tag",
         required: true
     },
-    author:{
+    author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
-    location:{
+    location: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Location",
         required: true
     },
-    relativeNewsArticles: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "NewsArticle"
-    }],
-    mediaUrls: [{
-        type: String,
-        required: true
-    }],
-    isTrending:{
+    relativeNewsArticles: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "NewsArticle"
+        }
+    ],
+    mediaUrls: [
+        {
+            type: String,
+            required: true,
+            trim: true
+        }
+    ],
+    isTrending: {
         type: Boolean,
         default: false
     },
-    view:{
+    view: {
         type: Number,
-        default: 0
+        default: 0,
+        min: 0
     },
     publishedAt: {
-        type: Date,
+        type: Date
     }
-})
+}, {
+    timestamps: true
+});
 
 export default mongoose.model("NewsArticle", newsArticleSchema);

@@ -3,12 +3,15 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
     email: {
         type: String,
         unique: true,
-        required: true
+        required: true,
+        lowercase: true,
+        trim: true
     },
     password: {
         type: String,
@@ -19,12 +22,17 @@ const userSchema = new mongoose.Schema({
         enum: ['user', 'admin'],
         default: 'user'
     },
-    bookmarks: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'NewsArticle'
-    }],
-    preferences: [String], // e.g., ["sports", "tech"]
+    bookmarks: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'NewsArticle'
+        }
+    ],
+    preferences: [String]
+}, {
+    timestamps: true 
 });
+
 
 
 export default mongoose.model("User", userSchema);
